@@ -1,11 +1,11 @@
 import lightbulb
 
-with open("./secrets/token") as f:
+with open("./secrets/token.txt") as f:
     token = f.read().strip()
 
 bot = lightbulb.BotApp(token)
 
-bot.load_extensions_from("C:/Users/barci/Desktop/kek/commands")
+bot.load_extensions_from("./commands")
 
 @bot.command
 @lightbulb.option("text", "text to repeat")
