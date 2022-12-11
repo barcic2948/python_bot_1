@@ -8,6 +8,5 @@ async def ping(ctx: lightbulb.Context) -> None:
 def load(bot: lightbulb.BotApp):
     bot.command(ping)
 
-
 def unload(bot: lightbulb.BotApp):
     bot.remove_command(bot.get_slash_command("ping"))
