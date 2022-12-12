@@ -1,5 +1,6 @@
 import random
 
+import hikari
 import lightbulb
 from lightbulb import commands
 
@@ -10,14 +11,22 @@ async def dice(ctx: lightbulb.context.Context) -> None:
     # Extract the options from the context
     message  = ctx.options.message
     target = message.replace(" ", "").lower()
-    number = target[0: target.find("d")]
-    sides = target[target.find("d") + 1: target.find("+")]
-    bonus = target[target.find("+") + 1:]
-
+    
     if target.find("d") == -1:
         await ctx.respond("Invalid Command")
         return
 
+    number = target[0: target.find("d")]
+    if not number: number = 1
+
+    if target.find("+") == -1:
+        bonus = 0
+        lenght = len(target)
+    else:
+        lenght = target.find("+")
+        bonus = target[target.find("+") + 1:]
+
+    sides = target[target.find("d") + 1: lenght]
 
     try:
         number = int(number)
@@ -37,12 +46,10 @@ async def dice(ctx: lightbulb.context.Context) -> None:
         return
 
     rolls = [random.randint(1, sides) for _ in range(number)]
-
+    retrolls = " + ".join(f"{r}" for r in rolls) + (f" + {bonus} (bonus)" if bonus else "")+ f" = **{sum(rolls) + bonus:,}**"
 
     await ctx.respond(
-        " + ".join(f"{r}" for r in rolls)
-        + (f" + {bonus} (bonus)" if bonus else "")
-        + f" = **{sum(rolls) + bonus:,}**"
+        f"Resoult for {ctx.member.display_name} | Message: {message} | Resoult: {retrolls}"
     )
 
 

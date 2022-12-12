@@ -11,6 +11,15 @@ number = target[0: target.find("d")]
 sides = target[target.find("d") + 1: target.find("+")]
 bonus = target[target.find("+") + 1:]
 
+
+print(number)
+print(sides)
+print(bonus)
+print("==============")
+
+if not number:
+    number = 1
+
 print(number)
 print(sides)
 print(bonus)
